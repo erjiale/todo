@@ -6,7 +6,7 @@ const app = express(); // create our express backend server application
 const port = 4000;
 
 // Connect to our db;
-var db = mongoose.connect(
+mongoose.connect(
   process.env.CONNECTION_STRING, 
   { useNewUrlParser: true, useUnifiedTopology: true });
 
