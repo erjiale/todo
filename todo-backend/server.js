@@ -14,6 +14,6 @@ app.get("/", (req, res) => {
     res.send("Welcome to todo-backend server");
   });
 
-app.listen(port, (req, res) => {
+app.listen(port, () => {
     console.log("Server is running on port: " + port);
 });
