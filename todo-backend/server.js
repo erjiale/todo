@@ -1,4 +1,5 @@
 const express = require("express");
+const dotenv = require("dotenv").config(); // import and configure dotenv
 
 const app = express(); // create our express backend server application
 const port = 4000;
