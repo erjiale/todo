@@ -4,6 +4,18 @@ const router = express.Router(); // use express.Router() class to create our rou
 const TodoSchema = require("../models/todo.model");
 
 // GET todos
+router.get("/", async (req, res) => {
+  try {
+    const allTodos = await TodoSchema.find();
+
+    return res.json(allTodos);
+  }
+  catch(err) {
+    console.log(err);
+    
+    return res.status(500).json({ error: "Internal error retrieving all todos" });
+  }
+});
 
 // CREATE todo
 router.post("/", async (req, res) => {
@@ -25,7 +37,6 @@ router.post("/", async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error; could not save todo" });
   }
 });
-
 
 // DELETE todo
 
