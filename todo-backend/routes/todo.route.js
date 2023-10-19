@@ -96,5 +96,26 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// UPDATE todo to complete/incomplete
+router.put("/:id/complete", async (req, res) => {
+  const todoId = req.params.id;
+  
+  try {
+    const filter = { _id: todoId };
+
+    let todo = await TodoSchema.findById(filter);
+
+    const updatedData = { isCompleted: !todo.isCompleted };
+
+    await TodoSchema.updateOne(filter, updatedData);
+
+    return res.json(`${todoId} has been succesfully updated to ${!todo.isCompleted}`);
+  }
+  catch(err) {
+    return res.status(500).json({ error: "Internal Server Error: could not update todo" });
+  }
+});
+
+
 
 module.exports = router; // export our router module system so other components can import this
