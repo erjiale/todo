@@ -55,8 +55,46 @@ router.post("/", async (req, res) => {
 });
 
 // DELETE todo
+router.delete("/:id", async (req, res) => {
+  const todoId = req.params.id;
 
+  try {
+    const todo = await TodoSchema.findByIdAndDelete({
+      _id: todoId
+    });
+
+    if (!todo) {
+      return res.status(404).json({ error: `Could not find todo ${todo}` });
+    }
+
+    return res.json(`Todo was successfully deleted - ${todoId} - ${todo.description}`);
+
+  }
+  catch(err) {
+    return res.status(500).json({ error: "Internal Server Error: could not delete todo" });
+  }
+});
 
 // UPDATE todo
+router.put("/:id", async (req, res) => {
+  const todoId = req.params.id;
+  
+  try {
+    if (!req.body.description) {
+      return res.status(400).json({ error: "Todo Description must not be empty" });
+    }
+
+    const filter = { _id: todoId };
+    const updatedData = { description: req.body.description };
+
+    await TodoSchema.findByIdAndUpdate(filter, updatedData);
+
+    return res.json(`${todoId} has been succesfully updated to ${req.body.description}`);
+  }
+  catch(err) {
+    return res.status(500).json({ error: "Internal Server Error: could not update todo" });
+  }
+});
+
 
 module.exports = router; // export our router module system so other components can import this
