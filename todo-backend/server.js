@@ -12,12 +12,15 @@ mongoose.connect(
   process.env.CONNECTION_STRING, 
   { useNewUrlParser: true, useUnifiedTopology: true });
 
+// Middlewares
+app.use(express.json());
+
 app.get("/", (req, res) => {
     res.send("Welcome to todo-backend server");
   });
 
 // Routes
-app.use('api/todo', todoRoute);
+app.use('/api/todo', todoRoute);
 
 app.listen(port, () => {
     console.log("Server is running on port: " + port);
