@@ -17,6 +17,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+// GET todo by Id
+router.get("/:id", async (req, res) => {
+  try {
+    const todo = await TodoSchema.findById(req.params.id);
+
+    if (todo === null) {
+      return res.status(404).json({ error: `todo with id ${req.params.id} was not found`})
+    }
+
+    return res.json(todo);
+  }
+  catch(err) {
+    return res.json(500).json({ error: `Internal server error when retrieving todo ${req.params.id}` });
+  }
+});
+
 // CREATE todo
 router.post("/", async (req, res) => {
   if (!req.body.description) {
@@ -39,6 +55,7 @@ router.post("/", async (req, res) => {
 });
 
 // DELETE todo
+
 
 // UPDATE todo
 
